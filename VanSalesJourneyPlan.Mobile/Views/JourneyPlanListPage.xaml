@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VanSalesJourneyPlan.Mobile.Views.JourneyPlanListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="My Journey Plans"
+    BackgroundColor="#F5F5F5">
+
+    <VerticalStackLayout Spacing="0">
+
+        <!-- Refresh Bar -->
+        <VerticalStackLayout
+            BackgroundColor="#2196F3"
+            Padding="16"
+            Spacing="8">
+            <Label
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="My Plans"
+                TextColor="White" />
+            <Button
+                BackgroundColor="Transparent"
+                Clicked="OnRefreshClicked"
+                FontSize="12"
+                Text="↻ Refresh"
+                TextColor="White" />
+        </VerticalStackLayout>
+
+        <!-- Plans List -->
+        <CollectionView
+            x:Name="PlansCollectionView"
+            SelectionMode="Single"
+            SelectionChangedCommand="{Binding SelectPlanCommand}"
+            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference PlansCollectionView}}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    ItemSpacing="8"
+                    Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        BackgroundColor="White"
+                        BorderColor="#E0E0E0"
+                        CornerRadius="8"
+                        HasShadow="False"
+                        Margin="12,0,12,0"
+                        Padding="12">
+                        <VerticalStackLayout Spacing="8">
+                            <Label
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                Text="{Binding Title}"
+                                TextColor="#333" />
+                            <Label
+                                FontSize="12"
+                                Text="{Binding PlanDate, StringFormat='Date: {0}'}"
+                                TextColor="#666" />
+                            <Label
+                                FontSize="12"
+                                Text="{Binding Items.Count, StringFormat='Customers: {0}'}"
+                                TextColor="#666" />
+                            <Label
+                                FontSize="11"
+                                Text="{Binding Status}"
+                                TextColor="#2196F3" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Empty State -->
+        <VerticalStackLayout
+            x:Name="EmptyStateView"
+            IsVisible="False"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Padding="20"
+            Spacing="10">
+            <Label
+                FontSize="24"
+                Text="📋"
+                HorizontalOptions="Center" />
+            <Label
+                FontSize="14"
+                Text="No journey plans"
+                TextColor="#666"
+                HorizontalOptions="Center" />
+            <Label
+                FontSize="12"
+                Text="Pull down to refresh"
+                TextColor="#999"
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator
+            x:Name="LoadingIndicator"
+            IsRunning="False"
+            IsVisible="False"
+            Color="#2196F3"
+            VerticalOptions="Center" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

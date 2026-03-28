@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VanSalesJourneyPlan.Mobile.Views.VisitLogPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Log Visit"
+    BackgroundColor="#F5F5F5">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Label
+            FontSize="18"
+            FontAttributes="Bold"
+            Text="Log Customer Visit"
+            TextColor="#333" />
+
+        <!-- Visit Date -->
+        <VerticalStackLayout Spacing="4">
+            <Label
+                FontSize="12"
+                Text="Visit Date"
+                TextColor="#666" />
+            <Frame
+                BorderColor="#E0E0E0"
+                CornerRadius="8"
+                HasShadow="False"
+                Padding="12">
+                <DatePicker
+                    x:Name="VisitDatePicker" />
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- Visit Time -->
+        <VerticalStackLayout Spacing="4">
+            <Label
+                FontSize="12"
+                Text="Visit Time (Optional)"
+                TextColor="#666" />
+            <Frame
+                BorderColor="#E0E0E0"
+                CornerRadius="8"
+                HasShadow="False"
+                Padding="12">
+                <TimePicker
+                    x:Name="VisitTimePicker" />
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- Sales Amount -->
+        <VerticalStackLayout Spacing="4">
+            <Label
+                FontSize="12"
+                Text="Sales Amount (Optional)"
+                TextColor="#666" />
+            <Frame
+                BorderColor="#E0E0E0"
+                CornerRadius="8"
+                HasShadow="False"
+                Padding="12">
+                <Entry
+                    x:Name="SalesAmountEntry"
+                    Keyboard="Numeric"
+                    Placeholder="0.00" />
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- Notes -->
+        <VerticalStackLayout Spacing="4">
+            <Label
+                FontSize="12"
+                Text="Notes (Optional)"
+                TextColor="#666" />
+            <Frame
+                BorderColor="#E0E0E0"
+                CornerRadius="8"
+                HasShadow="False"
+                Padding="12">
+                <Editor
+                    x:Name="NotesEditor"
+                    HeightRequest="100"
+                    Placeholder="Enter visit notes..." />
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- Status Label -->
+        <Label
+            x:Name="StatusLabel"
+            FontSize="12"
+            TextColor="Red"
+            IsVisible="False" />
+
+        <!-- Buttons -->
+        <VerticalStackLayout Spacing="10">
+            <Button
+                x:Name="LogVisitButton"
+                BackgroundColor="#4CAF50"
+                Clicked="OnLogVisitClicked"
+                CornerRadius="8"
+                FontSize="16"
+                FontAttributes="Bold"
+                Padding="16"
+                Text="Log Visit"
+                TextColor="White" />
+            <Button
+                BackgroundColor="Transparent"
+                Clicked="OnCancelClicked"
+                CornerRadius="8"
+                FontSize="16"
+                Text="Cancel"
+                TextColor="#2196F3" />
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+
+</ContentPage>

@@ -3,13 +3,18 @@
     x:Class="VanSalesJourneyPlan.Mobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:VanSalesJourneyPlan.Mobile"
-    Shell.FlyoutBehavior="Flyout"
-    Title="VanSalesJourneyPlan.Mobile">
+    xmlns:local="clr-namespace:VanSalesJourneyPlan.Mobile.Views">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent
+            Title="Plans"
+            ContentTemplate="{DataTemplate local:JourneyPlanListPage}"
+            Route="journeyplans" />
+        
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate local:ProfilePage}"
+            Route="profile" />
+    </TabBar>
 
 </Shell>

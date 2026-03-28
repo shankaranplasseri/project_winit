@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VanSalesJourneyPlan.Mobile.Views.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Profile"
+    BackgroundColor="#F5F5F5">
+
+    <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Start">
+
+        <Label
+            FontSize="20"
+            FontAttributes="Bold"
+            Text="User Profile"
+            TextColor="#333" />
+
+        <Frame
+            BackgroundColor="White"
+            BorderColor="#E0E0E0"
+            CornerRadius="8"
+            HasShadow="False"
+            Padding="16">
+            <VerticalStackLayout Spacing="12">
+                <VerticalStackLayout Spacing="4">
+                    <Label
+                        FontSize="11"
+                        Text="Username"
+                        TextColor="#999" />
+                    <Label
+                        x:Name="UsernameLabel"
+                        FontSize="14"
+                        Text="-"
+                        TextColor="#333" />
+                </VerticalStackLayout>
+
+                <BoxView
+                    BackgroundColor="#E0E0E0"
+                    HeightRequest="1" />
+
+                <VerticalStackLayout Spacing="4">
+                    <Label
+                        FontSize="11"
+                        Text="Role"
+                        TextColor="#999" />
+                    <Label
+                        x:Name="RoleLabel"
+                        FontSize="14"
+                        Text="-"
+                        TextColor="#333" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button
+            BackgroundColor="#FF6B6B"
+            Clicked="OnLogoutClicked"
+            CornerRadius="8"
+            FontSize="16"
+            FontAttributes="Bold"
+            Padding="16"
+            Text="Logout"
+            TextColor="White" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

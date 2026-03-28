@@ -1,15 +1,21 @@
 namespace VanSalesJourneyPlan.API.DTOs;
 
-public class LoginRequest
+// Generic API response wrapper
+public class ApiResponse
+{
+    public bool Success { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public object? Data { get; set; }
+}
+
+public class LoginRequestDto
 {
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
 }
 
-public class LoginResponse
+public class LoginResponseDto : ApiResponse
 {
-    public bool Success { get; set; }
-    public string Message { get; set; } = string.Empty;
     public string? Token { get; set; }
     public UserDto? User { get; set; }
 }
@@ -33,3 +39,4 @@ public class CreateUserRequest
     public string? LastName { get; set; }
     public string Role { get; set; } = "VanSalesUser";
 }
+

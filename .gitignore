@@ -1,0 +1,40 @@
+# Visual Studio
+.vs/
+.vscode/
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+
+# NuGet
+*.nupkg
+.nuget/
+
+# Rider
+.idea/
+*.sln.iml
+
+# macOS
+.DS_Store
+
+# Local database
+*.db
+*.db-shm
+*.db-wal
+
+# Azure
+.azure/
+
+# Mobile
+.gradle/
+local.properties

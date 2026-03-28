@@ -1,0 +1,118 @@
+@model CreateJourneyPlanRequest
+
+@{
+    ViewData["Title"] = "Create Journey Plan";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1>Create New Journey Plan</h1>
+            <hr />
+
+            <form method="post">
+                <div class="mb-3">
+                    <label for="PlanName" class="form-label">Plan Name *</label>
+                    <input type="text" class="form-control" id="PlanName" name="PlanName" required 
+                           placeholder="e.g., Northern Route - March 28" asp-for="PlanName" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="AssignedUserId" class="form-label">Assign To User *</label>
+                    <input type="number" class="form-control" id="AssignedUserId" name="AssignedUserId" required 
+                           placeholder="Enter User ID" asp-for="AssignedUserId" />
+                    <small class="form-text text-muted">Enter the ID of the van sales user</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ScheduleDate" class="form-label">Schedule Date *</label>
+                    <input type="date" class="form-control" id="ScheduleDate" name="ScheduleDate" required 
+                           asp-for="ScheduleDate" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea class="form-control" id="Description" name="Description" rows="3" 
+                              placeholder="Add any notes or details about this journey plan..." 
+                              asp-for="Description"></textarea>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Plan Items</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Add customers to this journey plan</p>
+                        <div id="items-container">
+                            <div class="item-row mb-3 p-3 border rounded" style="background-color: #f8f9fa;">
+                                <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                        <label class="form-label">Customer ID</label>
+                                        <input type="number" class="form-control item-customer-id" placeholder="e.g., 1" />
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="form-label">Sequence</label>
+                                        <input type="number" class="form-control item-sequence" placeholder="1" value="1" />
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-danger remove-item" onclick="this.parentElement.remove()">Remove</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="addItemRow()">+ Add Another Customer</button>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="@Url.Action("Index", "JourneyPlans")" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Plan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function addItemRow() {
+    const container = document.getElementById('items-container');
+    const newRow = document.createElement('div');
+    newRow.className = 'item-row mb-3 p-3 border rounded';
+    newRow.style.backgroundColor = '#f8f9fa';
+    newRow.innerHTML = `
+        <div class="row">
+            <div class="col-md-8 mb-2">
+                <label class="form-label">Customer ID</label>
+                <input type="number" class="form-control item-customer-id" placeholder="e.g., 1" />
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label">Sequence</label>
+                <input type="number" class="form-control item-sequence" placeholder="1" />
+            </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-danger remove-item" onclick="this.parentElement.remove()">Remove</button>
+    `;
+    container.appendChild(newRow);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('submit', function(e) {
+        if (e.target.matches('form')) {
+            const form = e.target;
+            const items = [];
+            document.querySelectorAll('.item-row').forEach(row => {
+                const customerId = row.querySelector('.item-customer-id').value;
+                const sequence = parseInt(row.querySelector('.item-sequence').value) || 1;
+                if (customerId) {
+                    items.push({ customerId: parseInt(customerId), sequence: sequence });
+                }
+            });
+
+            // Create hidden input for items
+            const itemsInput = document.createElement('input');
+            itemsInput.type = 'hidden';
+            itemsInput.name = 'Items';
+            itemsInput.value = JSON.stringify(items);
+            form.appendChild(itemsInput);
+        }
+    });
+});
+</script>

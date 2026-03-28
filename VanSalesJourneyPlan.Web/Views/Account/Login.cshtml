@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Admin Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">Van Sales Admin</h2>
+                    <p class="text-center text-muted mb-4">Login to manage journey plans</p>
+
+                    @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                    {
+                        <div class="alert alert-danger">
+                            @ViewData.ModelState[""].Errors[0].ErrorMessage
+                        </div>
+                    }
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="Username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="Username" name="Username" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="Password" name="Password" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">Login</button>
+                    </form>
+
+                    <hr class="my-4" />
+
+                    <p class="text-center text-muted small">
+                        <strong>Demo Credentials:</strong><br />
+                        Username: admin_test<br />
+                        Password: admin123
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

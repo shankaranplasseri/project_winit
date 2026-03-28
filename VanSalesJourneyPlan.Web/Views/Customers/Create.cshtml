@@ -1,0 +1,71 @@
+@model CustomerDto
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1>Add New Customer</h1>
+            <hr />
+
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="CustomerCode" class="form-label">Customer Code *</label>
+                        <input type="text" class="form-control" id="CustomerCode" name="CustomerCode" required 
+                               placeholder="e.g., CUST001" asp-for="CustomerCode" />
+                        <span class="text-danger small">@Html.ValidationMessage("CustomerCode")</span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="Name" class="form-label">Customer Name *</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required 
+                               placeholder="e.g., John's Store" asp-for="Name" />
+                        <span class="text-danger small">@Html.ValidationMessage("Name")</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="Location" class="form-label">Location *</label>
+                        <input type="text" class="form-control" id="Location" name="Location" required 
+                               placeholder="e.g., Main Street, Downtown" asp-for="Location" />
+                        <span class="text-danger small">@Html.ValidationMessage("Location")</span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="Route" class="form-label">Route *</label>
+                        <select class="form-select" id="Route" name="Route" required asp-for="Route">
+                            <option value="">-- Select Route --</option>
+                            <option value="North">North</option>
+                            <option value="South">South</option>
+                            <option value="East">East</option>
+                            <option value="West">West</option>
+                            <option value="Central">Central</option>
+                        </select>
+                        <span class="text-danger small">@Html.ValidationMessage("Route")</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ContactNumber" class="form-label">Contact Number</label>
+                    <input type="tel" class="form-control" id="ContactNumber" name="ContactNumber" 
+                           placeholder="e.g., +1-555-0123" asp-for="ContactNumber" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="Address" class="form-label">Full Address</label>
+                    <textarea class="form-control" id="Address" name="Address" rows="3" 
+                              placeholder="Enter full address..." asp-for="Address"></textarea>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="@Url.Action("Index", "Customers")" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

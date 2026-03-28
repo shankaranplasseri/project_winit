@@ -1,0 +1,76 @@
+@model List<CustomerDto>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>Customers</h1>
+                <a href="@Url.Action("Create", "Customers")" class="btn btn-primary">+ Add Customer</a>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Customer Code</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Route</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model)
+                    {
+                        <tr>
+                            <td><strong>@customer.CustomerCode</strong></td>
+                            <td>@customer.Name</td>
+                            <td>@customer.Location</td>
+                            <td><span class="badge bg-secondary">@customer.Route</span></td>
+                            <td>@customer.ContactNumber</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Customers", new { id = customer.CustomerId })" class="btn btn-sm btn-warning">Edit</a>
+                                <form method="post" action="@Url.Action("Delete", "Customers", new { id = customer.CustomerId })" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No customers found. <a href="@Url.Action("Create", "Customers")">Create one</a>
+        </div>
+    }
+
+    <a href="@Url.Action("Index", "Dashboard")" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>

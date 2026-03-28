@@ -1,0 +1,134 @@
+@model JourneyPlanDto
+
+@{
+    ViewData["Title"] = "Journey Plan Details";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>@Model.PlanName</h1>
+                <div>
+                    <a href="@Url.Action("Edit", "JourneyPlans", new { id = Model.JourneyPlanId })" 
+                       class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Index", "JourneyPlans")" class="btn btn-secondary">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Plan Information</h5>
+                    <p><strong>Plan ID:</strong> #@Model.JourneyPlanId</p>
+                    <p><strong>Assigned To:</strong> User #@Model.AssignedUserId</p>
+                    <p><strong>Schedule Date:</strong> @Model.ScheduleDate?.ToString("dddd, MMMM dd, yyyy")</p>
+                    <p><strong>Description:</strong> @(Model.Description ?? "N/A")</p>
+                    @{
+                        var allCompleted = Model.Items?.All(i => i.IsCompleted) ?? false;
+                        var isCompleted = allCompleted && (Model.Items?.Count ?? 0) > 0;
+                    }
+                    <p>
+                        <strong>Status:</strong> 
+                        @if (isCompleted)
+                        {
+                            <span class="badge bg-success">Completed</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning">In Progress</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Progress</h5>
+                    @{
+                        var total = Model.Items?.Count ?? 0;
+                        var completed = Model.Items?.Count(i => i.IsCompleted) ?? 0;
+                        var percentage = total > 0 ? (completed * 100 / total) : 0;
+                    }
+                    <p>
+                        <strong>@completed / @total</strong> customers visited
+                    </p>
+                    <div class="progress" style="height: 30px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: @percentage%;" 
+                             aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100">
+                            @percentage%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Plan Items</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Items != null && Model.Items.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Sequence</th>
+                                        <th>Customer ID</th>
+                                        <th>Status</th>
+                                        <th>Visited Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Items.OrderBy(x => x.Sequence))
+                                    {
+                                        <tr>
+                                            <td>@item.Sequence</td>
+                                            <td>Customer #@item.CustomerId</td>
+                                            <td>
+                                                @if (item.IsCompleted)
+                                                {
+                                                    <span class="badge bg-success">✓ Visited</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Pending</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.IsCompleted && item.VisitedDate.HasValue)
+                                                {
+                                                    @item.VisitedDate.Value.ToString("MM/dd/yyyy HH:mm")
+                                                }
+                                                else
+                                                {
+                                                    <em>Not yet visited</em>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No customers assigned to this plan.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="@Url.Action("Index", "JourneyPlans")" class="btn btn-secondary mt-3">Back to Plans</a>
+</div>

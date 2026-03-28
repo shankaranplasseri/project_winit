@@ -1,0 +1,93 @@
+@model JourneyPlanDto
+
+@{
+    ViewData["Title"] = "Edit Journey Plan";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1>Edit Journey Plan</h1>
+            <hr />
+
+            <form method="post">
+                <input type="hidden" name="JourneyPlanId" value="@Model.JourneyPlanId" />
+
+                <div class="mb-3">
+                    <label for="PlanName" class="form-label">Plan Name *</label>
+                    <input type="text" class="form-control" id="PlanName" name="PlanName" required 
+                           asp-for="PlanName" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="AssignedUserId" class="form-label">Assign To User *</label>
+                    <input type="number" class="form-control" id="AssignedUserId" name="AssignedUserId" required 
+                           asp-for="AssignedUserId" />
+                    <small class="form-text text-muted">Enter the ID of the van sales user</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ScheduleDate" class="form-label">Schedule Date *</label>
+                    <input type="date" class="form-control" id="ScheduleDate" name="ScheduleDate" required 
+                           value="@Model.ScheduleDate?.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea class="form-control" id="Description" name="Description" rows="3" 
+                              asp-for="Description"></textarea>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Plan Items (Read-Only)</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Items != null && Model.Items.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Sequence</th>
+                                            <th>Customer ID</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Items.OrderBy(x => x.Sequence))
+                                        {
+                                            <tr>
+                                                <td>@item.Sequence</td>
+                                                <td>Customer #@item.CustomerId</td>
+                                                <td>
+                                                    @if (item.IsCompleted)
+                                                    {
+                                                        <span class="badge bg-success">✓ Visited</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary">Pending</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No customers assigned to this plan.</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="@Url.Action("Index", "JourneyPlans")" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Plan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
